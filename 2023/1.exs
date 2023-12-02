@@ -1,20 +1,18 @@
 # https://adventofcode.com/2023/day/1
 defmodule Trebuchet do
-  def run(input_file) do
+  def solve(input_file) do
     File.stream!(input_file)
-    |> Enum.map(&calibration_value!/1)
+    |> Enum.map(&calibrate!/1)
     |> Enum.sum()
   end
 
-  defp calibration_value!(line) do
+  defp calibrate!(line) do
     digits = line
       |> String.trim()
       |> extract()
 
-    {parsed, _} = List.first(digits) <> List.last(digits)
-      |> Integer.parse()
-
-    parsed
+    List.first(digits) <> List.last(digits)
+    |> String.to_integer
   end
 
   defp extract(""), do: []
@@ -40,3 +38,5 @@ defmodule Trebuchet do
 
   defp advance(s), do: s |> String.slice(1..-1) |> extract()
 end
+
+"Part 2: #{Trebuchet.solve("1.txt")}" |> IO.puts
